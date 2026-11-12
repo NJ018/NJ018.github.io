@@ -1,0 +1,12 @@
+node_modules
+dist
+.DS_Store
+*.log
+*.tsbuildinfo
+
+# Original source files; the site uses the copies in public/
+/3662A64F-973F-4645-86EB-EB3BE252DF75.PNG
+/BALDEV_9009.pdf
+
+# Local editor settings
+.vscode/

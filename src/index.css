@@ -1,0 +1,228 @@
+@import 'tailwindcss';
+
+/* ---------- Theme: dark + purple ---------- */
+@theme {
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-display: 'Space Grotesk', 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* Backgrounds, darkest to lightest */
+  --color-ink-950: #07050d;
+  --color-ink-900: #0e0a19;
+  --color-ink-850: #130e22;
+  --color-ink-800: #1a1430;
+  --color-ink-700: #2a2147;
+  --color-ink-600: #3b2f63;
+
+  /* Text */
+  --color-fg: #f1edff;
+  --color-muted: #a99fc9;
+  --color-faint: #6f6694;
+
+  /* Purple accents */
+  --color-accent-300: #d8ccff;
+  --color-accent-400: #b69bff;
+  --color-accent-500: #9a6bff;
+  --color-accent-600: #7c3aed;
+  --color-accent-700: #5b21b6;
+  --color-glow: #c026d3;
+}
+
+@layer base {
+  html {
+    color-scheme: dark;
+    /* Purple glows behind the page */
+    background-color: var(--color-ink-950);
+    background-image:
+      radial-gradient(60rem 40rem at 85% -10%, rgb(124 58 237 / 0.22), transparent 60%),
+      radial-gradient(45rem 35rem at -10% 20%, rgb(192 38 211 / 0.12), transparent 60%),
+      radial-gradient(50rem 40rem at 50% 110%, rgb(91 33 182 / 0.18), transparent 60%);
+    background-attachment: fixed;
+  }
+  body {
+    @apply font-sans text-fg antialiased;
+  }
+  /* Film-grain texture: sits above the page background but behind all content */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.12;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  /* Headings use the display font */
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+  }
+  ::selection {
+    background: rgb(154 107 255 / 0.45);
+    color: white;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-accent-400);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  section[id] {
+    scroll-margin-top: 5rem;
+  }
+}
+
+@layer components {
+  /* Marker-style highlight for ==text== in the data files */
+  .hl {
+    color: var(--color-accent-300);
+    font-weight: 500;
+    background: linear-gradient(
+      to top,
+      rgb(154 107 255 / 0.32) 0 0.42em,
+      transparent 0.42em
+    );
+    border-radius: 2px;
+    padding-inline: 0.08em;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
+
+  .text-gradient {
+    background: linear-gradient(100deg, #f1edff 0%, var(--color-accent-400) 45%, #e879f9 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /*
+   * Card with a purple spotlight that follows the cursor.
+   * --mx / --my are set by useCardSpotlight() in src/motion.ts; --spot fades the effect in on hover.
+   */
+  .card {
+    position: relative;
+    border-radius: 1.25rem;
+    background:
+      radial-gradient(
+        480px circle at var(--mx, -999px) var(--my, -999px),
+        rgb(154 107 255 / calc(var(--spot) * 0.2)),
+        transparent 45%
+      ),
+      linear-gradient(180deg, rgb(26 20 48 / 0.85), rgb(14 10 25 / 0.85));
+    border: 1px solid var(--color-ink-700);
+    transition:
+      border-color 200ms ease,
+      transform 200ms ease,
+      box-shadow 200ms ease,
+      --spot 350ms ease;
+  }
+  /* Brighter rim on the border nearest the cursor */
+  .card::before {
+    content: '';
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(
+      320px circle at var(--mx, -999px) var(--my, -999px),
+      rgb(200 180 255 / 0.85),
+      rgb(192 38 211 / 0.35) 35%,
+      transparent 60%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: var(--spot);
+    pointer-events: none;
+  }
+  .card:hover {
+    --spot: 1;
+    border-color: rgb(154 107 255 / 0.35);
+    box-shadow:
+      0 0 0 1px rgb(154 107 255 / 0.1),
+      0 20px 60px -20px rgb(124 58 237 / 0.45);
+  }
+
+  .chip {
+    @apply inline-flex items-center rounded-full border border-ink-700 bg-ink-850 px-3 py-1 font-mono text-xs text-muted;
+  }
+
+  /* Skill tag with a logo; --brand (set inline) tints the border and background on hover */
+  .skill-chip {
+    @apply inline-flex items-center gap-2 rounded-lg border border-ink-700 bg-ink-850/80 px-3 py-1.5 text-[13px] font-medium text-fg/85;
+    transition:
+      border-color 200ms ease,
+      background-color 200ms ease,
+      color 200ms ease,
+      transform 200ms ease;
+  }
+  .skill-chip:hover {
+    color: white;
+    border-color: color-mix(in srgb, var(--brand) 60%, transparent);
+    background-color: color-mix(in srgb, var(--brand) 12%, transparent);
+    transform: translateY(-1px);
+  }
+
+  .btn {
+    @apply inline-flex items-center gap-2 rounded-xl px-5 py-2.5 text-sm font-semibold transition;
+  }
+  .btn-primary {
+    color: white;
+    background: linear-gradient(135deg, var(--color-accent-500), var(--color-accent-600) 60%, var(--color-glow));
+    box-shadow: 0 10px 30px -10px rgb(124 58 237 / 0.8);
+  }
+  .btn-primary:hover {
+    filter: brightness(1.12);
+    box-shadow: 0 14px 40px -10px rgb(154 107 255 / 0.9);
+  }
+  .btn-ghost {
+    @apply border border-ink-600 bg-ink-900/60 text-fg hover:border-accent-500 hover:text-accent-300;
+  }
+
+  .eyebrow {
+    @apply font-mono text-xs font-medium tracking-[0.2em] text-accent-400 uppercase;
+  }
+}
+
+/* Lets --spot animate smoothly (custom properties don't transition without this) */
+@property --spot {
+  syntax: '<number>';
+  inherits: true;
+  initial-value: 0;
+}
+
+/* Scroll reveal: index.html adds .reveal-ready only when motion is allowed */
+.reveal-ready [data-reveal] {
+  transition:
+    opacity 800ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 800ms cubic-bezier(0.2, 0.7, 0.2, 1),
+    filter 800ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal-ready [data-reveal]:not(.revealed) {
+  opacity: 0;
+  transform: translateY(28px);
+  filter: blur(4px);
+}
+
+/* Entrance animation, skipped for users who prefer reduced motion */
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 700ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @keyframes rise {
+    from {
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  .card:hover {
+    transform: translateY(-3px);
+  }
+}
