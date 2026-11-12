@@ -1,5 +1,5 @@
 import { profile, stats } from '../data/profile'
-import { GitHubIcon, DownloadIcon } from './Icons'
+import { GitHubIcon, LinkedInIcon } from './Icons'
 import { Rich } from './Rich'
 import { RoleRotator } from './RoleRotator'
 
@@ -33,9 +33,11 @@ export function Hero() {
             <a href={profile.github} target="_blank" rel="noreferrer" className="btn btn-ghost">
               <GitHubIcon /> GitHub
             </a>
-            <a href={profile.resume} download className="btn btn-ghost">
-              <DownloadIcon /> Resume
-            </a>
+            {profile.linkedin && (
+              <a href={profile.linkedin} target="_blank" rel="noreferrer" className="btn btn-ghost">
+                <LinkedInIcon /> LinkedIn
+              </a>
+            )}
           </div>
 
           <dl className="mt-12 grid max-w-xl grid-cols-3 gap-4 border-t border-ink-700/80 pt-6">

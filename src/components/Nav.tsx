@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { profile } from '../data/profile'
-import { CloseIcon, MenuIcon } from './Icons'
+import { CloseIcon, GitHubIcon, MenuIcon } from './Icons'
 
 const links = [
   { id: 'about', label: 'About' },
@@ -77,8 +77,8 @@ export function Nav() {
         </ul>
 
         <div className="flex items-center gap-2">
-          <a href={profile.resume} target="_blank" rel="noreferrer" className="btn btn-ghost hidden !py-2 sm:inline-flex">
-            Resume
+          <a href={profile.github} target="_blank" rel="noreferrer" className="btn btn-ghost hidden !py-2 sm:inline-flex">
+            <GitHubIcon /> GitHub
           </a>
           <button
             type="button"
@@ -94,10 +94,10 @@ export function Nav() {
 
       {open && (
         <ul className="border-t border-ink-700/70 px-5 py-3 md:hidden">
-          {[...links, { id: 'resume', label: 'Resume' }].map((link) => (
+          {links.map((link) => (
             <li key={link.id}>
               <a
-                href={link.id === 'resume' ? profile.resume : `#${link.id}`}
+                href={`#${link.id}`}
                 onClick={() => setOpen(false)}
                 className={`block rounded-lg px-3 py-2.5 ${
                   active === link.id ? 'bg-accent-500/15 text-accent-300' : 'text-muted'

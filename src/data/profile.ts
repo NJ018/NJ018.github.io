@@ -15,7 +15,6 @@ export const profile = {
   // Empty values are hidden on the site.
   linkedin: 'https://www.linkedin.com/in/baldev-chhillar-3298a1424',
   email: 'baldevchhilllar@gmail.com',
-  resume: 'resume.pdf',
   photo: 'headshot.jpg',
 }
 

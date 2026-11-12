@@ -20,7 +20,7 @@ Personal portfolio website for **Baldev**, final-year B.Tech (ECE – IIoT) stud
 
 | Section | Content |
 |---|---|
-| **Hero** | Name, one-line intro, headshot, buttons for Resume / GitHub / Contact |
+| **Hero** | Name, one-line intro, headshot, buttons for Projects / GitHub / LinkedIn |
 | **About** | Short summary: full-stack systems, REST APIs, RAG pipelines, fault tolerance and testing |
 | **Projects** | Cards for featured projects (see below), each with stack tags, highlights, and links |
 | **Skills** | Grouped: languages, backend/frontend, databases, GenAI, tools & testing |
@@ -57,8 +57,7 @@ Portfolio/
 ├── public/
 │   ├── headshot.jpg        # profile photo (640×640)
 │   ├── projects/           # project screenshots
-│   ├── og-image.jpg        # link-preview image (generated)
-│   └── resume.pdf          # downloadable resume
+│   └── og-image.jpg        # link-preview image (generated)
 ├── src/
 │   ├── components/         # Nav, Hero, About, Projects, BrowserFrame, Skills, SkillIcon, Journey, Contact
 │   ├── data/
@@ -130,7 +129,6 @@ The code lives in `src/motion.ts` and `src/index.css`. For visitors who have *re
 - **Add a project screenshot:** put the image in `public/projects/` and set `image: 'projects/<file>.jpg'` (plus a short `imageAlt`) on that project. Landscape images around 1600px wide work best.
 - **Add a skill:** add it to `src/data/skills.ts`. If [simple-icons](https://simpleicons.org) has its logo, map the name to it in `src/components/SkillIcon.tsx` (e.g. `Docker: siDocker`); otherwise it gets a purple sparkle icon, or you can map it to one of the outline icons there.
 - **Change bio or links:** edit `src/data/profile.ts`.
-- **Update resume:** replace `public/resume.pdf`.
 - **Update photo:** replace `public/headshot.jpg` (square works best).
 - **Highlight a phrase:** wrap it in `==double equals==` in any data file and it renders with the purple marker highlight.
 
@@ -150,7 +148,7 @@ When the site's link is pasted into LinkedIn, WhatsApp, Slack or X, it shows [`p
 
 - [x] Write README and site plan
 - [x] Scaffold React + TypeScript + Vite project
-- [x] Copy assets into `public/` (`headshot.jpg`, `resume.pdf`)
+- [x] Copy assets into `public/` (`headshot.jpg`)
 - [x] Dark + purple theme, responsive layout and navigation
 - [x] Hero and About sections
 - [x] Project cards driven by `projects.ts`
@@ -170,4 +168,4 @@ When the site's link is pasted into LinkedIn, WhatsApp, Slack or X, it shows [`p
 
 ## License
 
-Code is released under the MIT License. The photo, resume and written content are mine and not covered by the license.
+Code is released under the MIT License. The photo and written content are mine and not covered by the license.
